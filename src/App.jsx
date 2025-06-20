@@ -4,6 +4,8 @@
 import { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { gerarNumeroSequencial } from "./firebaseService";
+
 
 function carregarImagemBase64(url) {
   return new Promise((resolve, reject) => {
@@ -81,10 +83,7 @@ export default function ChatOrcamento() {
         const logoBase64 = await carregarImagemBase64("/logo-aulevi.png");
 
         // Gerar número sequencial com base no localStorage
-        const ultimo = localStorage.getItem("aulevidoc_last") || 0;
-        const novo = Number(ultimo) + 1;
-        localStorage.setItem("aulevidoc_last", novo);
-        const codigoOrcamento = `OF${String(novo).padStart(3, "0")}`;
+        const codigoOrcamento = await gerarNumeroSequencial();
         
         // Data atual formatada
         const dataAtual = new Date().toLocaleDateString("pt-BR");
@@ -231,10 +230,13 @@ doc.text(
               <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded" onClick={() => doc.save(`orcamento-aulevi-${codigoOrcamento}.pdf`)}>
                 📄 Baixar PDF
               </button>
+              <button className="mt-2 bg-blue-100 text-blue-700 px-4 py-2 rounded shadow ml-2 hover:bg-blue-200 transition" onClick={() => window.open(doc.output("bloburl"), "_blank")}>
+              👁️ Visualizar PDF
+              </button>
             </>
           )
         },
-        { autor: "bot", texto: "Deseja fazer um novo orçamento?" }
+        
       ]);
     } catch (err) {
       console.error("Erro ao calcular orçamento:", err);
