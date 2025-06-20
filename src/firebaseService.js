@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, doc, runTransaction } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC8QKN_IwzUEQVwNzfyG9VLAdeGsnDbdog",
-  authDomain: "orcamento-aulevi.firebaseapp.com",
-  projectId: "orcamento-aulevi",
-  storageBucket: "orcamento-aulevi.appspot.com",
-  messagingSenderId: "15287240368",
-  appId: "1:15287240368:web:7c8a8a3f305eac97a51d75"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
